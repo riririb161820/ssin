@@ -1122,7 +1122,19 @@ export default function App() {
     { id: "front", label: "🛒 구매사", sub: "마켓플레이스" },
     { id: "seller", label: "📦 공급사", sub: "Seller Office" },
     { id: "admin", label: "🏛 관리자", sub: "Back-Office" },
+    { id: "proposal", label: "📋 제안", sub: "Proposal" }
   ];
+
+  const handleTabClick = (tabId) => {
+    if (tabId === "proposal") {
+      // 제안 탭일 경우: 기존 화면 유지한 채 새 창으로 HTML 페이지 띄우기
+      window.open("https://ssin-ten.vercel.app/proposal_v2.html", "_blank", "noopener,noreferrer");
+    } else {
+      // 나머지 탭일 경우: 부드러운 React 내부 화면 전환
+      setPortal(tabId);
+    }
+  };
+
 
   return (
     <div className="font-sans" style={{ fontFamily: "'DM Sans', 'Pretendard', system-ui, sans-serif" }}>
@@ -1130,7 +1142,8 @@ export default function App() {
       <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-2 px-2">
         <div className="flex gap-1 bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-2xl p-1 shadow-2xl">
           {tabs.map(t => (
-            <button key={t.id} onClick={() => setPortal(t.id)}
+            // 3. onClick 이벤트를 직접 변경하지 않고, 방금 만든 분기 함수로 연결
+            <button key={t.id} onClick={() => handleTabClick(t.id)}
               className={`px-3 py-2 rounded-xl text-xs font-bold transition-all flex flex-col items-center leading-tight ${portal === t.id ? "bg-white text-slate-900 shadow-lg" : "text-slate-400 hover:text-white"}`}>
               <span>{t.label}</span>
               <span className={`text-xs font-normal ${portal === t.id ? "text-slate-500" : "text-slate-600"}`}>{t.sub}</span>
